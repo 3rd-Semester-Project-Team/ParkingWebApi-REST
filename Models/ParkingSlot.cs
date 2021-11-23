@@ -1,22 +1,26 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-/// <summary>
-/// Defines the info of a parking slot
-/// </summary>
-public class ParkingSlot
+
+namespace WebApi_REST.Models
 {
     /// <summary>
-    /// Id of the Parking slot
+    /// Defines the info of a parking slot
     /// </summary>
-    [Required]
-    public int ParkingId { get; set; }
-    /// <summary>
-    /// Time when the state of Occupied (boolean) is changed
-    /// </summary>
-    public DateTime SensorDateTime { get; set; }
-    /// <summary>
-    /// States if a parking slot is taken or not
-   /// </summary>
-    public bool Occupied { get; set; }
+    public class ParkingSlot
+    {
+        /// <summary>
+        /// Id of the Parking slot
+        /// </summary>
+        [Required]
+        public int ParkingId { get; set; }
+        /// <summary>
+        /// Time when the state of Occupied (boolean) is changed
+        /// </summary>
+        public DateTime SensorDateTime { get; set; }
+        /// <summary>
+        /// States if a parking slot is taken or not
+        /// </summary>
+        public bool Occupied { get; set; }
+    }
 }
