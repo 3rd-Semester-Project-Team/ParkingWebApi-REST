@@ -10,7 +10,7 @@ using WebApi_REST.Models;
 namespace WebApi_REST.Managers.Tests
 {
     [TestClass()]
-    public class SensorManagerTests
+    public class ParkingManagerTests
     {
         [TestMethod()]
         public void GetAllTest_ListCountPassing()
@@ -18,7 +18,7 @@ namespace WebApi_REST.Managers.Tests
             //Arrange
             int expected = 4;
             int actualCount=-1;
-            ParkingManager manager = new ParkingManager();
+            ParkingsManager manager = new ParkingsManager();
             //Act
             actualCount = manager.GetAll().Count();
             ////Assert
@@ -29,7 +29,7 @@ namespace WebApi_REST.Managers.Tests
         public void GetByIdTest_()
         {
             //Arrange
-            ParkingManager manager = new ParkingManager();
+            ParkingsManager manager = new ParkingsManager();
             var expected = false;
 
             //Assert
@@ -40,7 +40,7 @@ namespace WebApi_REST.Managers.Tests
         public void AddParkSlotTest()
         {
             //ACt
-            ParkingManager manager = new ParkingManager();
+            ParkingsManager manager = new ParkingsManager();
             var newCount = 5;
             var actual = -1;
 
@@ -56,7 +56,7 @@ namespace WebApi_REST.Managers.Tests
         public void GetParkSlotNonExistentID_Fail()
         {
             //Arrange
-            ParkingManager manager = new ParkingManager();
+            ParkingsManager manager = new ParkingsManager();
 
             //Act
              var actual = manager.GetById(503769375);
@@ -68,7 +68,7 @@ namespace WebApi_REST.Managers.Tests
         [TestMethod()]
         public void AddNullObjectTest()
         {
-            ParkingManager manager = new ParkingManager();
+            ParkingsManager manager = new ParkingsManager();
             var actual=manager.AddParkSlot(null);
             Assert.IsNull(actual);
         }

@@ -6,7 +6,7 @@ using WebApi_REST.Models;
 
 namespace WebApi_REST.Managers
 {
-    public class ParkingManager
+    public class ParkingsManager
     {
         private static  int _nextId = 0;
         private static List<ParkingSlot> _parkingSlot = new List<ParkingSlot>()
