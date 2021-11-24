@@ -3,6 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using WebApi_REST.Managers;
+using WebApi_REST.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,24 +16,62 @@ namespace WebApi_REST.Controllers
     [ApiController]
     public class ParkingsController : ControllerBase
     {
+        private readonly ParkingsManager _parkingManager = new ParkingsManager();
+        
         // GET: api/<ParkingsController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public ActionResult<IEnumerable<ParkingSlot>>  GetAll()
         {
-            return new string[] { "value1", "value2" };
+            var result= _parkingManager.GetAll();
+            if (result == null)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return Ok(result);
+            }
         }
 
         // GET api/<ParkingsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<ParkingSlot> GetById(int id)
         {
-            return "value";
+            var result = _parkingManager.GetById(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(result);
+            }
+            
         }
 
+        //To be reviewed again
         // POST api/<ParkingsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public ActionResult<ParkingSlot> Post([FromBody] RawData data)
         {
+            ParkingSlot newParkingSlot = new ParkingSlot();
+            newParkingSlot.ParkingId = 0;
+            newParkingSlot.Occupied = data.Occupied;
+            newParkingSlot.SensorDateTime = DateTime.Now;
+            if (newParkingSlot.Equals(null))
+            {
+                return Conflict();
+            }
+            else
+            {
+                return Created(newParkingSlot.ParkingId.ToString(), newParkingSlot);
+            }
         }
 
         // PUT api/<ParkingsController>/5
