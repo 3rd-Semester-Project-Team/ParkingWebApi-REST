@@ -77,18 +77,19 @@ namespace ParkingWebApi_RESTTests.Controllers
         [TestMethod]
         public void Add_Test()
         {
+            // Arrange
             var slot = new ParkingSlot()
                 { ParkingId = 2, Occupied = true, SensorDateTime = DateTime.Now };
             _mockManager.Setup(mock => mock.AddParkSlot(slot)).Returns(slot);
             _mockSensorManager.Setup(m => m.GetById(1)).Returns(new Sensor() { SensorId = 1, ParkingId = 2 });
-
             _controller = new ParkingsController(_mockManager.Object, _mockSensorManager.Object);
-
             RawData data = new RawData() { Occupied = true, SensorId = 1 };
+
+            // Act
             var result = _controller.Post(data).Result as ObjectResult;
 
+            // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(2, (result.Value as ParkingSlot).ParkingId);
             Assert.AreEqual(201, result.StatusCode);
         }
 
