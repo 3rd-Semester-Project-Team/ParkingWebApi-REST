@@ -7,7 +7,7 @@ using WebApi_REST.Models;
 
 namespace WebApi_REST.Managers
 {
-    public class SensorsManager
+    public class SensorsManager : ISensorsManager
     {
         private static List<Sensor> _sensors = new List<Sensor>()
         {

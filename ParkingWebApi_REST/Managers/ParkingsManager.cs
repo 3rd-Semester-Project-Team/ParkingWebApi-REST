@@ -6,7 +6,7 @@ using WebApi_REST.Models;
 
 namespace WebApi_REST.Managers
 {
-    public class ParkingsManager
+    public class ParkingsManager : IParkingsManager
     {
         private static  int _nextId = 0;
         private static List<ParkingSlot> _parkingSlot = new List<ParkingSlot>()
@@ -17,7 +17,7 @@ namespace WebApi_REST.Managers
             new ParkingSlot() { ParkingId = ++_nextId, Occupied = false, SensorDateTime = DateTime.Now },
         };
 
-        public virtual IEnumerable<ParkingSlot> GetAll()
+        public IEnumerable<ParkingSlot> GetAll()
         {
             return _parkingSlot;
         }

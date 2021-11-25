@@ -16,11 +16,13 @@ namespace WebApi_REST.Controllers
     [ApiController]
     public class ParkingsController : ControllerBase
     {
-        private readonly ParkingsManager _parkingManager;
+        private readonly IParkingsManager _parkingManager;
+        private readonly ISensorsManager _sensorsManager;
 
-        public ParkingsController(ParkingsManager manager)  
+        public ParkingsController(IParkingsManager manager, ISensorsManager sensorsManager)  
         {
             _parkingManager = manager;
+            _sensorsManager = sensorsManager;
         }
         
         // GET: api/<ParkingsController>
@@ -66,7 +68,7 @@ namespace WebApi_REST.Controllers
         public ActionResult<ParkingSlot> Post([FromBody] RawData data)
         {
             ParkingSlot newParkingSlot = new ParkingSlot();
-            newParkingSlot.ParkingId = 0;
+            newParkingSlot.ParkingId = _sensorsManager.GetById(data.SensorId).ParkingId;
             newParkingSlot.Occupied = data.Occupied;
             newParkingSlot.SensorDateTime = DateTime.Now;
             if (newParkingSlot.Equals(null))

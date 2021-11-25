@@ -15,9 +15,9 @@ namespace WebApi_REST.Controllers
     [ApiController]
     public class SensorsController : ControllerBase
     {
-        private readonly SensorsManager _manager;
+        private readonly ISensorsManager _manager;
 
-        public SensorsController(SensorsManager manager)
+        public SensorsController(ISensorsManager manager)
         {
             _manager = manager;
         }
