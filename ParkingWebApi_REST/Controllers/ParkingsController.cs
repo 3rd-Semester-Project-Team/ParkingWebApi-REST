@@ -16,7 +16,12 @@ namespace WebApi_REST.Controllers
     [ApiController]
     public class ParkingsController : ControllerBase
     {
-        private readonly ParkingsManager _parkingManager = new ParkingsManager();
+        private readonly ParkingsManager _parkingManager;
+
+        public ParkingsController(ParkingsManager manager)  
+        {
+            _parkingManager = manager;
+        }
         
         // GET: api/<ParkingsController>
         [HttpGet]

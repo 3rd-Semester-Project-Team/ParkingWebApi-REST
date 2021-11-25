@@ -17,7 +17,7 @@ namespace WebApi_REST.Managers
             new ParkingSlot() { ParkingId = ++_nextId, Occupied = false, SensorDateTime = DateTime.Now },
         };
 
-        public IEnumerable<ParkingSlot> GetAll()
+        public virtual IEnumerable<ParkingSlot> GetAll()
         {
             return _parkingSlot;
         }
