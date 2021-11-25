@@ -85,10 +85,11 @@ namespace ParkingWebApi_RESTTests.Controllers
             _controller = new ParkingsController(_mockManager.Object, _mockSensorManager.Object);
 
             RawData data = new RawData() { Occupied = true, SensorId = 1 };
-            var result = _controller.Post(data);
+            var result = _controller.Post(data).Result as ObjectResult;
 
             Assert.IsNotNull(result);
-            // assert the right status code
+            Assert.AreEqual(2, (result.Value as ParkingSlot).ParkingId);
+            Assert.AreEqual(201, result.StatusCode);
         }
 
 
