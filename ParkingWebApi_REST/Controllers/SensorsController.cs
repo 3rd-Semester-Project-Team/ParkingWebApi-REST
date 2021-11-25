@@ -54,12 +54,13 @@ namespace WebApi_REST.Controllers
         // POST api/<SensorsController>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public ActionResult<Sensor> Post([FromBody] Sensor sensor)
         {
             var result = _manager.Add(sensor);
             if (result != null)
             {
-                return Ok(result);
+                return Created(sensor.SensorId.ToString(), sensor);
             }
 
             return Conflict($"The Sensor with the id {sensor.SensorId} already exists.");

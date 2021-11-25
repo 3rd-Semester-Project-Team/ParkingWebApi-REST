@@ -71,13 +71,16 @@ namespace WebApi_REST.Controllers
             newParkingSlot.ParkingId = _sensorsManager.GetById(data.SensorId).ParkingId;
             newParkingSlot.Occupied = data.Occupied;
             newParkingSlot.SensorDateTime = DateTime.Now;
-            if (newParkingSlot.Equals(null))
+
+            var result = _parkingManager.AddParkSlot(newParkingSlot);
+
+            if (result == null)
             {
                 return Conflict();
             }
             else
             {
-                return Created(newParkingSlot.ParkingId.ToString(), newParkingSlot);
+                return Created(result.ParkingId.ToString(), result);
             }
         }
 

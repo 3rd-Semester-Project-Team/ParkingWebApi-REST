@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Any;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using WebApi_REST.Controllers;
@@ -15,11 +16,11 @@ namespace ParkingWebApi_RESTTests.Controllers
     [TestClass]
     public class ParkingsControllerTests
     {
-        private Mock<IParkingsManager> _mockManager;
-        private ParkingsController _controller;
+        private Mock<IParkingsManager> _mockParkingManager;
         private Mock<ISensorsManager> _mockSensorManager;
+        private ParkingsController _controller;
 
-        private static List<ParkingSlot> _parkingSlot = new List<ParkingSlot>()
+        private List<ParkingSlot> _parkingSlot = new List<ParkingSlot>()
         {
             new ParkingSlot() { ParkingId = 1, Occupied = false, SensorDateTime = DateTime.Now },
             new ParkingSlot() { ParkingId = 2, Occupied = false, SensorDateTime = DateTime.Now },
@@ -29,7 +30,7 @@ namespace ParkingWebApi_RESTTests.Controllers
 
         public ParkingsControllerTests()
         {
-            _mockManager = new Mock<IParkingsManager>();
+            _mockParkingManager = new Mock<IParkingsManager>();
             _mockSensorManager = new Mock<ISensorsManager>();
         }
 
@@ -37,8 +38,10 @@ namespace ParkingWebApi_RESTTests.Controllers
         public void GetAllParkings_Test()
         {
             // Arrange
-            _mockManager.Setup(mock => mock.GetAll()).Returns(_parkingSlot);
-            _controller = new ParkingsController(_mockManager.Object, _mockSensorManager.Object);
+            _mockParkingManager.Setup(mock => 
+                mock.GetAll())
+                .Returns(_parkingSlot);
+            _controller = new ParkingsController(_mockParkingManager.Object, _mockSensorManager.Object);
             
             // Act
             var result = _controller.GetAll().Result as ObjectResult;
@@ -52,8 +55,10 @@ namespace ParkingWebApi_RESTTests.Controllers
         [TestMethod]
         public void GetById_ValidId_Test()
         {
-            _mockManager.Setup(mock => mock.GetById(1)).Returns(_parkingSlot[0]);
-            _controller = new ParkingsController(_mockManager.Object, _mockSensorManager.Object);
+            _mockParkingManager.Setup(mock => 
+                mock.GetById(1))
+                .Returns(_parkingSlot[0]);
+            _controller = new ParkingsController(_mockParkingManager.Object, _mockSensorManager.Object);
 
             var result = _controller.GetById(1).Result as ObjectResult;
 
@@ -65,35 +70,60 @@ namespace ParkingWebApi_RESTTests.Controllers
         [TestMethod]
         public void GetById_InvalidId_Test()
         {
-            _mockManager.Setup(mock => mock.GetById(100)).Returns(() => { return null;});
-            _controller = new ParkingsController(_mockManager.Object, _mockSensorManager.Object);
+            _mockParkingManager.Setup(mock => 
+                mock.GetById(100))
+                .Returns(() => null);
+            _controller = new ParkingsController(_mockParkingManager.Object, _mockSensorManager.Object);
 
             var result = _controller.GetById(100);
-
-            // to get the status code of the result, we cast it to a SatusCodeResult
+            
             Assert.AreEqual(404, (result.Result as StatusCodeResult).StatusCode);
         }
 
         [TestMethod]
-        public void Add_Test()
+        public void Add_Successful_Test()
         {
             // Arrange
             var slot = new ParkingSlot()
                 { ParkingId = 2, Occupied = true, SensorDateTime = DateTime.Now };
-            _mockManager.Setup(mock => mock.AddParkSlot(slot)).Returns(slot);
-            _mockSensorManager.Setup(m => m.GetById(1)).Returns(new Sensor() { SensorId = 1, ParkingId = 2 });
-            _controller = new ParkingsController(_mockManager.Object, _mockSensorManager.Object);
+
+            _mockParkingManager.Setup(mock => 
+                mock.AddParkSlot(It.IsAny<ParkingSlot>()))
+                .Returns(slot);
+            _mockSensorManager.Setup(m => 
+                m.GetById(1))
+                .Returns(new Sensor() { SensorId = 1, ParkingId = 2 });
+            _controller = new ParkingsController(_mockParkingManager.Object, _mockSensorManager.Object);
+
             RawData data = new RawData() { Occupied = true, SensorId = 1 };
 
             // Act
-            var result = _controller.Post(data).Result as ObjectResult;
+            var createdResult = _controller.Post(data).Result;
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(201, result.StatusCode);
+            Assert.IsNotNull(createdResult);
+            Assert.IsInstanceOfType(createdResult, typeof(CreatedResult));
         }
 
+        [TestMethod]
+        public void Add_WithConflict_Test()
+        {
+            // Arrange
+            _mockParkingManager.Setup(mock => 
+                mock.AddParkSlot(It.IsAny<ParkingSlot>()))
+                .Returns(() => null);
+            _mockSensorManager.Setup(m => 
+                m.GetById(1))
+                .Returns(new Sensor() { SensorId = 1, ParkingId = 2 });
+            _controller = new ParkingsController(_mockParkingManager.Object, _mockSensorManager.Object);
+            RawData data = new RawData() { Occupied = true, SensorId = 1 };
 
+            // Act
+            var createdResult = _controller.Post(data).Result;
 
+            // Assert
+            Assert.IsNotNull(createdResult);
+            Assert.IsInstanceOfType(createdResult, typeof(ConflictResult));
+        }
     }
 }
