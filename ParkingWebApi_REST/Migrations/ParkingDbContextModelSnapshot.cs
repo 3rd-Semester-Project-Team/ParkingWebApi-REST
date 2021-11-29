@@ -22,17 +22,15 @@ namespace WebApi_REST.Migrations
             modelBuilder.Entity("WebApi_REST.Models.ParkingSlot", b =>
                 {
                     b.Property<int>("ParkingId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<bool>("Occupied")
-                        .HasColumnType("bit");
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("SensorDateTime")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("ParkingId");
+                    b.Property<bool>("Occupied")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ParkingId", "SensorDateTime");
 
                     b.ToTable("ParkingSlots");
                 });

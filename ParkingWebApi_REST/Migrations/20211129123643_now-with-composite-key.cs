@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApi_REST.Migrations
 {
-    public partial class _1 : Migration
+    public partial class nowwithcompositekey : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,14 +11,13 @@ namespace WebApi_REST.Migrations
                 name: "ParkingSlots",
                 columns: table => new
                 {
-                    ParkingId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ParkingId = table.Column<int>(type: "int", nullable: false),
                     SensorDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Occupied = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ParkingSlots", x => x.ParkingId);
+                    table.PrimaryKey("PK_ParkingSlots", x => new { x.ParkingId, x.SensorDateTime });
                 });
 
             migrationBuilder.CreateTable(
