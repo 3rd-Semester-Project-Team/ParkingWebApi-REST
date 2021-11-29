@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi_REST.Managers;
+using WebApi_REST.Models;
 
 namespace WebApi_REST
 {
@@ -26,13 +28,16 @@ namespace WebApi_REST
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IParkingsManager, ParkingsManager>();
-            services.AddTransient<ISensorsManager, SensorsManager>();
+         
+            services.AddTransient<IParkingsManager, EFParkingsManager>();
+            services.AddTransient<ISensorsManager, EFSensorsManager>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi_REST", Version = "v1" });
             });
+            //Registering a service and telling the Data access layer what database to access.
+            services.AddDbContext<ParkingDbContext>(options => options.UseSqlServer(Secrets.ConnectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
