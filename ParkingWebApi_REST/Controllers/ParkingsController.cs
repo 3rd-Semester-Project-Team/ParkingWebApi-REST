@@ -68,7 +68,10 @@ namespace WebApi_REST.Controllers
         public ActionResult<ParkingSlot> Post([FromBody] RawData data)
         {
             ParkingSlot newParkingSlot = new ParkingSlot();
-            newParkingSlot.ParkingId = _sensorsManager.GetById(data.SensorId).ParkingId;
+
+            var sensor = _sensorsManager.GetById(data.SensorId);
+            if (sensor == null) return Conflict($"Sensor id {data.SensorId} does not exist.");
+            newParkingSlot.ParkingId = sensor.ParkingId;
             newParkingSlot.Occupied = data.Occupied;
             newParkingSlot.SensorDateTime = DateTime.Now;
 
