@@ -13,6 +13,7 @@ namespace WebApi_REST.Models
         /// Id of the Parking slot
         /// </summary>
         [Required]
+        [Key]
         public int ParkingId { get; set; }
         /// <summary>
         /// Time when the state of Occupied (boolean) is changed
