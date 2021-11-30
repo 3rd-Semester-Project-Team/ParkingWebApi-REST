@@ -17,7 +17,7 @@ namespace WebApi_REST.Managers
         }
         public ParkingSlot AddParkSlot(ParkingSlot parkingSlot)
         {
-          var newParkingData = _context.ParkingSlots.Add(parkingSlot);
+            var newParkingData = _context.ParkingSlots.Add(parkingSlot);
             _context.SaveChanges();
             return newParkingData.Entity;
         }
