@@ -22,15 +22,20 @@ namespace WebApi_REST.Managers
             return _parkingSlot;
         }
 
-        public ParkingSlot GetById(int id)
+        public IEnumerable<ParkingSlot> GetById(int id)
         {
-            //Check in the controller if the object is null
-
-            //if (_parkingSlot[id] != null) return _parkingSlot[id];
-            var result = _parkingSlot.Find(f => f.ParkingId == id);
-            return result;
-           // else return new ParkingSlot();
+            throw new NotImplementedException();
         }
+
+        //public ParkingSlot GetById(int id)
+        //{
+        //    //Check in the controller if the object is null
+
+        //    //if (_parkingSlot[id] != null) return _parkingSlot[id];
+        //    var result = _parkingSlot.Find(f => f.ParkingId == id);
+        //    return result;
+        //   // else return new ParkingSlot();
+        //}
 
         public ParkingSlot AddParkSlot(ParkingSlot parkingSlot)
         {

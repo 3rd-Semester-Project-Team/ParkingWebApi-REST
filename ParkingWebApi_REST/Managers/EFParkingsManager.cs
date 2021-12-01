@@ -27,9 +27,9 @@ namespace WebApi_REST.Managers
             return _context.ParkingSlots;
         }
 
-        public ParkingSlot GetById(int id)
+        public IEnumerable<ParkingSlot> GetById(int id)
         {
-            return _context.ParkingSlots.Find(id);
+            return _context.ParkingSlots.Where(p=>p.ParkingId==id);
         }
     }
 }

@@ -46,7 +46,7 @@ namespace WebApi_REST.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<ParkingSlot> GetById(int id)
+        public ActionResult<IEnumerable<ParkingSlot>> GetById(int id)
         {
             var result = _parkingManager.GetById(id);
             if (result == null)

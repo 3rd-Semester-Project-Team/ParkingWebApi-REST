@@ -6,7 +6,7 @@ namespace WebApi_REST.Managers
     public interface IParkingsManager
     {
         IEnumerable<ParkingSlot> GetAll();
-        ParkingSlot GetById(int id);
+        IEnumerable<ParkingSlot> GetById(int id);
         ParkingSlot AddParkSlot(ParkingSlot parkingSlot);
     }
 }

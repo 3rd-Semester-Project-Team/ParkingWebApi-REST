@@ -50,6 +50,15 @@ namespace ParkingWebApi_RESTTests.Managers
             _mockContext.Verify(c=>c.SaveChanges(), Times.Once);
         }
 
+        [TestMethod]
+        public void GetById_Test()
+        {
+            var result = _manager.GetById(1);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(3, result.Count());
+        }
+
 
 
 
