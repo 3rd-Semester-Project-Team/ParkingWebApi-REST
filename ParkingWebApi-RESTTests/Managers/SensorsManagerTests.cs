@@ -9,7 +9,7 @@ using WebApi_REST.Models;
 
 namespace ParkingWebApi_RESTTests.Managers
 {
-    [TestClass]
+    //[TestClass]
     public class SensorsManagerTests
     {
         private SensorsManager _manager;

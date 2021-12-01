@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.EntityFrameworkCore;
 using WebApi_REST.Models;
 
 namespace WebApi_REST.Managers
@@ -25,9 +25,9 @@ namespace WebApi_REST.Managers
 
         public void Delete(int id)
         {
-          var sensorToDelete = _context.Sensors.Find(id);
-          _context.Sensors.Remove(sensorToDelete);
-          _context.SaveChanges();
+            var sensorToDelete = _context.Sensors.Find(id);
+            _context.Sensors.Remove(sensorToDelete);
+            _context.SaveChanges();
 
         }
 
