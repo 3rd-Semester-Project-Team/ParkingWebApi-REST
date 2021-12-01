@@ -40,18 +40,6 @@ namespace ParkingWebApi_RESTTests.Managers
             Assert.AreEqual(3, result.Count());
         }
 
-        //[TestMethod]
-        //public void GetById_ExistingId_Test()
-        //{
-        //    _mockContext.Setup(c => c.ParkingSlots).Returns(_mockParkingSlotsSet.Object);
-        //    EFParkingsManager manager = new EFParkingsManager(_mockContext.Object);
-        //    int requestId = 1;
-
-        //    var result = manager.GetById(requestId);
-
-        //    Assert.IsNotNull(result);
-        //}
-
         [TestMethod]
         public void AddParkingSlot_Test()
         {
