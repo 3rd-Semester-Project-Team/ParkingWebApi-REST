@@ -31,5 +31,30 @@ namespace WebApi_REST.Managers
         {
             return _context.ParkingSlots.Where(p=>p.ParkingId==id);
         }
+
+        public IEnumerable<ParkingSlot> GetLatestParkingStatus()
+        {
+            List<ParkingSlot> resultList = new List<ParkingSlot>();
+
+            var allParkings = _context.ParkingSlots;
+            var allIds = new List<int>();
+            foreach (var slot in allParkings)
+            {
+                if (!allIds.Contains(slot.ParkingId))
+                {
+                    allIds.Add(slot.ParkingId);
+                }
+            }
+            allIds.Sort();
+            foreach(int i in allIds)
+            {
+                var list = GetById(i);
+                list.OrderBy(p => p.SensorDateTime).ToList();
+                var latestPost = list.Last();
+                resultList.Add(latestPost);
+            }
+
+            return resultList;
+        }
     }
 }

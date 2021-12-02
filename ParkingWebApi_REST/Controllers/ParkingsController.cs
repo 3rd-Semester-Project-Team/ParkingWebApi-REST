@@ -60,6 +60,14 @@ namespace WebApi_REST.Controllers
             
         }
 
+        [HttpGet("latest")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<IEnumerable<ParkingSlot>> GetLatest()
+        {
+            return Ok(_parkingManager.GetLatestParkingStatus());
+        }
+
         //To be reviewed again
         // POST api/<ParkingsController>
         [HttpPost]
