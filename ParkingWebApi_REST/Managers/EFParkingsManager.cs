@@ -17,7 +17,7 @@ namespace WebApi_REST.Managers
         }
         public ParkingSlot AddParkSlot(ParkingSlot parkingSlot)
         {
-          var newParkingData = _context.ParkingSlots.Add(parkingSlot);
+            var newParkingData = _context.ParkingSlots.Add(parkingSlot);
             _context.SaveChanges();
             return newParkingData.Entity;
         }
@@ -27,9 +27,9 @@ namespace WebApi_REST.Managers
             return _context.ParkingSlots;
         }
 
-        public ParkingSlot GetById(int id)
+        public IEnumerable<ParkingSlot> GetById(int id)
         {
-            return _context.ParkingSlots.Find(id);
+            return _context.ParkingSlots.Where(p=>p.ParkingId==id);
         }
     }
 }
