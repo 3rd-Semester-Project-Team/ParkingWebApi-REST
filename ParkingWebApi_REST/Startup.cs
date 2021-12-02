@@ -28,7 +28,15 @@ namespace WebApi_REST
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-         
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllOrigins",
+                    builder => builder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+            });
+
             services.AddTransient<IParkingsManager, EFParkingsManager>();
             services.AddTransient<ISensorsManager, EFSensorsManager>();
             services.AddControllers();
@@ -51,7 +59,7 @@ namespace WebApi_REST
             }
 
             app.UseRouting();
-
+            app.UseCors("AllOrigins");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

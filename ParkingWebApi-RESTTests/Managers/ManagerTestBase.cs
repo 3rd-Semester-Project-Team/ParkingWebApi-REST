@@ -90,7 +90,7 @@ namespace ParkingWebApi_RESTTests.Managers
             parkingEntityEntry.SetupGet(m => m.Entity).Returns(new ParkingSlot());
             #endregion
 
-            #region Mocking DbSet<Senssor> methods behaviour
+            #region Mocking DbSet<Sensor> methods behaviour
             // Setup: DbSet Find method
             MockSensors.Setup(set => set.Find(It.IsAny<object[]>()))
                 .Returns((object[] input) => Sensors.FirstOrDefault(s => s.SensorId == (Int32)input[0]));
