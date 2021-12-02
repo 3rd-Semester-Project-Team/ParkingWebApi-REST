@@ -8,5 +8,6 @@ namespace WebApi_REST.Managers
         IEnumerable<ParkingSlot> GetAll();
         IEnumerable<ParkingSlot> GetById(int id);
         ParkingSlot AddParkSlot(ParkingSlot parkingSlot);
+        IEnumerable<ParkingSlot> GetLatestParkingStatus();
     }
 }

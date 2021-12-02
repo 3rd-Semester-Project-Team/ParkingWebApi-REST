@@ -44,5 +44,10 @@ namespace WebApi_REST.Managers
             _parkingSlot.Add(parkingSlot);
             return parkingSlot;
         }
+
+        public IEnumerable<ParkingSlot> GetLatestParkingStatus()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
