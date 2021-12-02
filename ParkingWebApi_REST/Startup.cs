@@ -37,7 +37,7 @@ namespace WebApi_REST
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi_REST", Version = "v1" });
             });
             //Registering a service and telling the Data access layer what database to access.
-            services.AddDbContext<ParkingDbContext>(options => options.UseSqlServer(Secrets.ConnectionString));
+            services.AddDbContext<ParkingDbContext>(options => options.UseSqlServer(Secrets.ConnectionsString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
