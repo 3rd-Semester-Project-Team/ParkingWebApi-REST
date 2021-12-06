@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ParkingWebApi-REST</name>
+    </assembly>
+    <members>
+        <member name="T:WebApi_REST.Controllers.ParkingsController">
+            <summary>
+            API Controller for Parking slots. 
+            </summary>
+        </member>
+        <member name="F:WebApi_REST.Controllers.ParkingsController._parkingManager">
+            <summary>
+            Instance field referencing the IParkingsManager
+            </summary>
+        </member>
+        <member name="F:WebApi_REST.Controllers.ParkingsController._sensorsManager">
+            <summary>
+            Instance field referencing the ISensorsManager
+            </summary>
+        </member>
+        <member name="M:WebApi_REST.Controllers.ParkingsController.#ctor(WebApi_REST.Managers.IParkingsManager,WebApi_REST.Managers.ISensorsManager)">
+            <summary>
+            API Controller constructor, using dependency injection
+            </summary>
+            <param name="manager">This is the ParkingsManager that we inject, must implement IParkinsgManager</param>
+            <param name="sensorsManager">This is the SensorsManager that we inject, must implement ISensorsManager</param>
+        </member>
+        <member name="M:WebApi_REST.Controllers.ParkingsController.GetAll">
+            <summary>
+            Http Get Method, get all ParkingSlots
+            </summary>
+            <returns>Status Code and all the ParkingSlots (if Status is OK)</returns>
+        </member>
+        <member name="M:WebApi_REST.Controllers.ParkingsController.GetById(System.Int32)">
+            <summary>
+            Http Get method, get by id
+            </summary>
+            <param name="id">the Parking Slot id</param>
+            <returns>Status Code + all ParkingSlots that match the Id from the Search Criteria (if status is OK)</returns>
+        </member>
+        <member name="M:WebApi_REST.Controllers.ParkingsController.GetLatest">
+            <summary>
+            Http Get Method, with the last status for each ParkingSlot
+            </summary>
+            <returns>Status Code + a ParkingSlot collection with the last register of each in the Db (if Status is OK)</returns>
+        </member>
+        <member name="M:WebApi_REST.Controllers.ParkingsController.Post(WebApi_REST.Models.RawData)">
+            <summary>
+            Http Post Method 
+            </summary>
+            <param name="data">JSON format data, SensorId and Occupied(bool) </param>
+            <returns>Status Code + ParkingSlot object (if 201) and adding new data to the Database every time the status(occupied) of ParkingSlot Changes</returns>
+        </member>
+        <member name="T:WebApi_REST.Controllers.SensorsController">
+            <summary>
+            API Controller for Parking slots. 
+            </summary>
+        </member>
+        <member name="F:WebApi_REST.Controllers.SensorsController._manager">
+            <summary>
+            Instance field referencing the ISensorsManager
+            </summary>
+        </member>
+        <member name="M:WebApi_REST.Controllers.SensorsController.#ctor(WebApi_REST.Managers.ISensorsManager)">
+            <summary>
+            API Controller constructor, using dependency injection
+            </summary>
+            <param name="manager">This is the SensorsManager that we inject, must implement ISensorsManager</param>
+        </member>
+        <member name="M:WebApi_REST.Controllers.SensorsController.Get">
+            <summary>
+            Http Get Method, get all Sensors
+            </summary>
+            <returns>Status Code and all the Sensors (if Status is OK)</returns>
+        </member>
+        <member name="M:WebApi_REST.Controllers.SensorsController.GetById(System.Int32)">
+            <summary>
+            Http Get method, get by id
+            </summary>
+            <param name="id">id use to search for a sensor</param>
+            <returns>Status Code + Sensor that matches the Id from the Search Criteria (if status is OK)</returns>
+        </member>
+        <member name="M:WebApi_REST.Controllers.SensorsController.Post(WebApi_REST.Models.Sensor)">
+            <summary>
+            Http Post Method 
+            </summary>
+            <param name="sensor">JSON format data, SensorId and ParkingId</param>
+            <returns>Status Code + Sensor object (if 201) and adding new data to the Database</returns>
+        </member>
+        <member name="M:WebApi_REST.Controllers.SensorsController.Delete(System.Int32)">
+            <summary>
+            Http Delete Method, Delete Sensor with specified id
+            </summary>
+            <param name="id">Id of the Sensor to be deleted</param>
+        </member>
+        <member name="M:WebApi_REST.Controllers.SensorsController.Put(System.Int32,WebApi_REST.Models.Sensor)">
+            <summary>
+            Http Put Method, Updating the ParkingID from Sensor
+            </summary>
+            <param name="id"> Id for Sensor to be updated</param>
+            <param name="sensor">JSON format data, the new data for Sensor</param>
+            <returns>Status Code + Sensor object updated (if Status is OK)</returns>
+        </member>
+        <member name="T:WebApi_REST.Models.ParkingSlot">
+            <summary>
+            Defines the info of a parking slot
+            </summary>
+        </member>
+        <member name="P:WebApi_REST.Models.ParkingSlot.ParkingId">
+            <summary>
+            Id of the Parking slot
+            </summary>
+        </member>
+        <member name="P:WebApi_REST.Models.ParkingSlot.SensorDateTime">
+            <summary>
+            Time when the state of Occupied (boolean) is changed
+            </summary>
+        </member>
+        <member name="P:WebApi_REST.Models.ParkingSlot.Occupied">
+            <summary>
+            States if a parking slot is taken or not
+            </summary>
+        </member>
+        <member name="T:WebApi_REST.Models.Sensor">
+            <summary>
+            Assigning a sensor to a parking slot
+            </summary>
+        </member>
+        <member name="P:WebApi_REST.Models.Sensor.SensorId">
+            <summary>
+            Id of the sensor, Primary Key
+            </summary>
+        </member>
+        <member name="P:WebApi_REST.Models.Sensor.ParkingId">
+            <summary>
+            Id of the parking slot, Foreign Key
+            </summary>
+        </member>
+        <member name="T:WebApi_REST.Secrets">
+            <summary>
+            Secret class to store the ConnectionString to the Azure Database. Contains the password to the Database, so this is why we stored it secretly. This class is git-ignored.
+            </summary>
+        </member>
+    </members>
+</doc>
