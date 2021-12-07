@@ -7,7 +7,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\Zealand\SEMESTERS\3RD SEMESTER\.Projects\Final Project\ParkingWebApi-REST\ParkingWebApi_REST\ParkingWebApi-REST.xml</DocumentationFile>
+    <DocumentationFile>C:\Users\Nohely\OneDrive\Desktop\ComputerScience\2ndYearCS\3rdSemesterProject\SensorParkingProject-WebAPI\ParkingWebApi_REST\ParkingWebApi-REST.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\Users\Nohely\OneDrive\Desktop\ComputerScience\2ndYearCS\3rdSemesterProject\SensorParkingProject-WebAPI\ParkingWebApi_REST\ParkingWebApi-REST.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

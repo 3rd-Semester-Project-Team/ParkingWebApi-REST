@@ -102,6 +102,114 @@
             <param name="sensor">JSON format data, the new data for Sensor</param>
             <returns>Status Code + Sensor object updated (if Status is OK)</returns>
         </member>
+        <member name="T:WebApi_REST.Managers.IParkingsManager">
+            <summary>
+            Interface that is inherited and implemented by the EFParkingsManager.
+            </summary>
+        </member>
+        <member name="T:WebApi_REST.Managers.ISensorsManager">
+            <summary>
+            Interface that is inherited and implemented by the EFSensorsManager
+            </summary>
+        </member>
+        <member name="T:WebApi_REST.Managers.EFParkingsManager">
+            <summary>
+            Manager class that inherits and implements IParkingsManager.
+            </summary>
+        </member>
+        <member name="F:WebApi_REST.Managers.EFParkingsManager._context">
+            <summary>
+            An instance of the ParkingsDBContext. This is needed to allow the manager access to the database.
+            </summary>
+        </member>
+        <member name="M:WebApi_REST.Managers.EFParkingsManager.#ctor(WebApi_REST.Models.ParkingDbContext)">
+            <summary>
+            The instance of the ParkingsDBContext is initialized in the constructor.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:WebApi_REST.Managers.EFParkingsManager.AddParkSlot(WebApi_REST.Models.ParkingSlot)">
+            <summary>
+            Adds new data to be database every time the status of a parkingSlot changes.
+            </summary>
+            <param name="parkingSlot"></param>
+            <returns> The newly added data from the parkingSlot whose status recently changed</returns>
+        </member>
+        <member name="M:WebApi_REST.Managers.EFParkingsManager.GetAll">
+            <summary>
+            Retrieves all the parkingSlots from the database.
+            </summary>
+            <returns>A collection of all the parkingSlots</returns>
+        </member>
+        <member name="M:WebApi_REST.Managers.EFParkingsManager.GetById(System.Int32)">
+            <summary>
+            Retrieves from the database the parkingSlot that has an Id that matches the Id that is the search criteria.
+            </summary>
+            <param name="id"></param>
+            <returns> The parkingSlot whose Id matches the Id being searched</returns>
+        </member>
+        <member name="M:WebApi_REST.Managers.EFParkingsManager.GetLatestParkingStatus">
+            <summary>
+            Retrieves from the database the most recent data from each parkingSlot.
+            </summary>
+            <returns>A collection of the most recent data of each parkingSLot</returns>
+        </member>
+        <member name="T:WebApi_REST.Managers.EFSensorsManager">
+            <summary>
+            Manager class that inherits and implements ISensorsManager.
+            </summary>
+        </member>
+        <member name="F:WebApi_REST.Managers.EFSensorsManager._context">
+            <summary>
+            An instance of the ParkingsDBContext. This is needed to allow the manager access to the database.
+            </summary>
+        </member>
+        <member name="M:WebApi_REST.Managers.EFSensorsManager.#ctor(WebApi_REST.Models.ParkingDbContext)">
+            <summary>
+            The instance of the ParkingsDBContext is initialized in the constructor.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:WebApi_REST.Managers.EFSensorsManager.Add(WebApi_REST.Models.Sensor)">
+            <summary>
+            Adds a new sensor the the database, if the sensor Id does not already exist.
+            </summary>
+            <param name="sensor"></param>
+            <returns> the newly added sensor</returns>
+        </member>
+        <member name="M:WebApi_REST.Managers.EFSensorsManager.Delete(System.Int32)">
+            <summary>
+            Removes from the database the sensor whose Id matches the Id being searched.
+            </summary>
+            <param name="id">Does not return anything</param>
+        </member>
+        <member name="M:WebApi_REST.Managers.EFSensorsManager.Edit(System.Int32,WebApi_REST.Models.Sensor)">
+            <summary>
+            Retrieves from the database the sensor whose Id matched the search criteria 
+            then updates the sensor, and saves the updates.
+            </summary>
+            <param name="id"></param>
+            <param name="newSensor"></param>
+            <returns>The newly edited sensor</returns>
+        </member>
+        <member name="M:WebApi_REST.Managers.EFSensorsManager.GetAll">
+            <summary>
+            Retrieves all the sensors from the database.
+            </summary>
+            <returns>A collection of all the sensors</returns>
+        </member>
+        <member name="M:WebApi_REST.Managers.EFSensorsManager.GetById(System.Int32)">
+            <summary>
+            Retrieves from the database the sensor that has an Id that matches the Id that is the search criteria.
+            </summary>
+            <param name="id"></param>
+            <returns>The sensor that whose Id matches and null when not found</returns>
+        </member>
+        <member name="T:WebApi_REST.Models.ParkingDbContext">
+            <summary>
+            This is the data access layer.
+            </summary>
+        </member>
         <member name="T:WebApi_REST.Models.ParkingSlot">
             <summary>
             Defines the info of a parking slot
@@ -122,6 +230,21 @@
             States if a parking slot is taken or not
             </summary>
         </member>
+        <member name="T:WebApi_REST.Models.RawData">
+            <summary>
+            Raw data incoming from the sensor of each parking slot.
+            </summary>
+        </member>
+        <member name="P:WebApi_REST.Models.RawData.SensorId">
+            <summary>
+            Id of the sensor assigned to a parking slot.
+            </summary>
+        </member>
+        <member name="P:WebApi_REST.Models.RawData.Occupied">
+            <summary>
+            Status of the state of the parking slot. Occupied = False when the slot is empty, Occupied = True when the parking slot is taken.
+            </summary>
+        </member>
         <member name="T:WebApi_REST.Models.Sensor">
             <summary>
             Assigning a sensor to a parking slot
@@ -135,11 +258,6 @@
         <member name="P:WebApi_REST.Models.Sensor.ParkingId">
             <summary>
             Id of the parking slot, Foreign Key
-            </summary>
-        </member>
-        <member name="T:WebApi_REST.Secrets">
-            <summary>
-            Secret class to store the ConnectionString to the Azure Database. Contains the password to the Database, so this is why we stored it secretly. This class is git-ignored.
             </summary>
         </member>
     </members>
