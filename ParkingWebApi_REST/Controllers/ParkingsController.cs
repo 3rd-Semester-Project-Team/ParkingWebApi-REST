@@ -12,19 +12,38 @@ using WebApi_REST.Models;
 
 namespace WebApi_REST.Controllers
 {
+    /// <summary>
+    /// API Controller for Parking slots. 
+    /// </summary>
+    
     [Route("api/[controller]")]
     [ApiController]
     public class ParkingsController : ControllerBase
     {
+        /// <summary>
+        /// Instance field referencing the IParkingsManager
+        /// </summary>
         private readonly IParkingsManager _parkingManager;
+        /// <summary>
+        /// Instance field referencing the ISensorsManager
+        /// </summary>
         private readonly ISensorsManager _sensorsManager;
+
+        /// <summary>
+        /// API Controller constructor, using dependency injection
+        /// </summary>
+        /// <param name="manager">This is the ParkingsManager that we inject, must implement IParkinsgManager</param>
+        /// <param name="sensorsManager">This is the SensorsManager that we inject, must implement ISensorsManager</param>
 
         public ParkingsController(IParkingsManager manager, ISensorsManager sensorsManager)  
         {
             _parkingManager = manager;
             _sensorsManager = sensorsManager;
         }
-        
+        /// <summary>
+        /// Http Get Method, get all ParkingSlots
+        /// </summary>
+        /// <returns>Status Code and all the ParkingSlots (if Status is OK)</returns>
         // GET: api/<ParkingsController>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -41,7 +60,11 @@ namespace WebApi_REST.Controllers
                 return Ok(result);
             }
         }
-
+        /// <summary>
+        /// Http Get method, get by id
+        /// </summary>
+        /// <param name="id">the Parking Slot id</param>
+        /// <returns>Status Code + all ParkingSlots that match the Id from the Search Criteria (if status is OK)</returns>
         // GET api/<ParkingsController>/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -60,6 +83,11 @@ namespace WebApi_REST.Controllers
             
         }
 
+        /// <summary>
+        /// Http Get Method, with the last status for each ParkingSlot
+        /// </summary>
+        /// <returns>Status Code + a ParkingSlot collection with the last register of each in the Db (if Status is OK)</returns>
+
         [HttpGet("latest")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -68,8 +96,11 @@ namespace WebApi_REST.Controllers
             return Ok(_parkingManager.GetLatestParkingStatus());
         }
 
-        //To be reviewed again
-        // POST api/<ParkingsController>
+        /// <summary>
+        /// Http Post Method 
+        /// </summary>
+        /// <param name="data">JSON format data, SensorId and Occupied(bool) </param>
+        /// <returns>Status Code + ParkingSlot object (if 201) and adding new data to the Database every time the status(occupied) of ParkingSlot Changes</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
@@ -93,18 +124,6 @@ namespace WebApi_REST.Controllers
             {
                 return Created(result.ParkingId.ToString(), result);
             }
-        }
-
-        // PUT api/<ParkingsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ParkingsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }
