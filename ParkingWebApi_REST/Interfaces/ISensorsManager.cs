@@ -3,6 +3,9 @@ using WebApi_REST.Models;
 
 namespace WebApi_REST.Managers
 {
+    /// <summary>
+    /// Interface that is inherited and implemented by the EFSensorsManager
+    /// </summary>
     public interface ISensorsManager
     {
         List<Sensor> GetAll();

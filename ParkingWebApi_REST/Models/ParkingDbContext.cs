@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace WebApi_REST.Models
 {
+    /// <summary>
+    /// This is the data access layer.
+    /// </summary>
     public class ParkingDbContext: DbContext
     {
         public virtual DbSet<ParkingSlot> ParkingSlots { get; set; }
